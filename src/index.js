@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { Provider } from 'mobx-react';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import  ProductsStore from './stores/products';
+import axios from 'axios';
+axios.defaults.url = `${process.env.BACKEND_URL}`;
+const stores = {
+  ProductsStore
+}
+const history = createBrowserHistory();
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router history={history}>
+      <Provider {...stores}>
+        <App />
+    </Provider>
+      </Router>,
   document.getElementById('root')
 );
 
